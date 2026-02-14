@@ -250,35 +250,6 @@ T = TRANSLATIONS[st.session_state.language]
 theme = COLOR_THEMES[st.session_state.color_theme]
 dark = st.session_state.dark_mode
 
-# ─────────────────────────────────────────────────────────
-# TOP TOOLBAR
-# ─────────────────────────────────────────────────────────
-st.markdown("""
-<div style="background:linear-gradient(90deg,rgba(79,70,229,0.08),rgba(236,72,153,0.08));
-    border-radius:12px;padding:0.3rem 1rem 0.1rem;margin-bottom:1rem;
-    border:1px solid rgba(79,70,229,0.15);">
-</div>
-""", unsafe_allow_html=True)
-tb1, tb2, tb3 = st.columns([1, 1, 1])
-with tb1:
-    st.markdown("**🌐 Language**")
-    lang = st.selectbox("lang_sel", ["English", "Hindi", "Telugu"], index=["English", "Hindi", "Telugu"].index(st.session_state.language), label_visibility="collapsed", key="lang_select")
-    if lang != st.session_state.language:
-        st.session_state.language = lang
-        st.rerun()
-with tb2:
-    st.markdown("**🎨 Color Theme**")
-    ct = st.selectbox("theme_sel", list(COLOR_THEMES.keys()), index=list(COLOR_THEMES.keys()).index(st.session_state.color_theme), label_visibility="collapsed", key="theme_select")
-    if ct != st.session_state.color_theme:
-        st.session_state.color_theme = ct
-        st.rerun()
-with tb3:
-    st.markdown("**🌙 Dark Mode**")
-    dm = st.toggle("Dark Mode", value=st.session_state.dark_mode, key="dark_toggle")
-    if dm != st.session_state.dark_mode:
-        st.session_state.dark_mode = dm
-        st.rerun()
-st.markdown("---")
 
 # ─────────────────────────────────────────────────────────
 # DYNAMIC CSS
@@ -326,6 +297,12 @@ html, body, [class*="css"] {{ font-family: 'Inter', sans-serif; }}
 
 /* Force theme */
 .stApp {{ background-color: {bg_main}; color: {text_main}; }}
+header[data-testid="stHeader"],
+.stApp > header,
+.stApp > header > div {{
+    background-color: {bg_main} !important;
+    background: {bg_main} !important;
+}}
 h1, h2, h3, h4, h5, h6 {{ color: {text_heading} !important; }}
 p, li, span, label, div {{ color: {text_main}; }}
 .stMarkdown, .stMarkdown p, .stMarkdown li {{ color: {text_main} !important; }}
@@ -399,6 +376,32 @@ section[data-testid="stSidebar"] .stRadio label {{ color: #ffffff !important; }}
 
 /* Toolbar row */
 .toolbar-row {{ display:flex; gap:1rem; align-items:center; padding:0.5rem 0; }}
+
+/* Settings expander in sidebar */
+section[data-testid="stSidebar"] .streamlit-expanderHeader,
+section[data-testid="stSidebar"] .streamlit-expanderHeader *,
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary,
+section[data-testid="stSidebar"] [data-testid="stExpander"] summary * {{
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+}}
+section[data-testid="stSidebar"] [data-testid="stExpander"] {{
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,0.08) !important;
+    margin-bottom: 0.5rem !important;
+}}
+section[data-testid="stSidebar"] [data-testid="stExpander"] svg {{
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}}
+section[data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"] {{
+    background: transparent !important;
+}}
 
 /* Hero gradient card */
 .hero-card {{
@@ -666,6 +669,22 @@ stage_labels = {0: "NORMAL", 1: "HYPERTENSION (Stage-1)", 2: "HYPERTENSION (Stag
 # SIDEBAR
 # ─────────────────────────────────────────────────────────
 with st.sidebar:
+    with st.expander("⚙️ Settings", expanded=False):
+        st.markdown("**🌐 Language**")
+        lang = st.selectbox("lang_sel", ["English", "Hindi", "Telugu"], index=["English", "Hindi", "Telugu"].index(st.session_state.language), label_visibility="collapsed", key="lang_select")
+        if lang != st.session_state.language:
+            st.session_state.language = lang
+            st.rerun()
+        st.markdown("**🎨 Color Theme**")
+        ct = st.selectbox("theme_sel", list(COLOR_THEMES.keys()), index=list(COLOR_THEMES.keys()).index(st.session_state.color_theme), label_visibility="collapsed", key="theme_select")
+        if ct != st.session_state.color_theme:
+            st.session_state.color_theme = ct
+            st.rerun()
+        st.markdown("**🌙 Dark Mode**")
+        dm = st.toggle("Dark Mode", value=st.session_state.dark_mode, key="dark_toggle")
+        if dm != st.session_state.dark_mode:
+            st.session_state.dark_mode = dm
+            st.rerun()
     st.markdown("## 🫀 PulseGuard AI")
     st.markdown("---")
     nav_options = [T["nav_home"], T["nav_eda"], T["nav_model"], T["nav_predict"], T["nav_about"]]
@@ -1179,4 +1198,3 @@ elif page_key == "about":
         </p>
     </div>
     """, unsafe_allow_html=True)
-
