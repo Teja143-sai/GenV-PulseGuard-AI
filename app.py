@@ -335,6 +335,56 @@ p, li, span, label, div {{ color: {text_main}; }}
 .stMetric [data-testid="stMetricValue"] {{ color: {text_main} !important; }}
 .stSelectbox label, .stRadio label {{ color: {text_secondary} !important; }}
 
+/* Selectbox theme-aware styling */
+.stSelectbox > div,
+.stSelectbox > div > div,
+.stSelectbox [data-baseweb="select"],
+.stSelectbox [data-baseweb="select"] > div {{
+    background-color: {bg_card} !important;
+    border-color: {pri}66 !important;
+    border-radius: 10px !important;
+}}
+.stSelectbox [data-baseweb="select"] {{
+    border: 2px solid {pri}66 !important;
+    transition: all 0.3s ease !important;
+}}
+.stSelectbox [data-baseweb="select"]:hover {{
+    border-color: {pri} !important;
+    box-shadow: 0 0 12px {pri}33 !important;
+}}
+.stSelectbox [data-baseweb="select"] * {{
+    color: {text_main} !important;
+    font-weight: 500 !important;
+}}
+.stSelectbox [data-baseweb="select"] svg {{
+    fill: {pri} !important;
+}}
+/* Dropdown popover */
+[data-baseweb="popover"],
+[data-baseweb="popover"] > div {{
+    background-color: {bg_card} !important;
+    border: 1px solid {pri}44 !important;
+    border-radius: 10px !important;
+}}
+[data-baseweb="popover"] li,
+[data-baseweb="popover"] ul,
+[data-baseweb="menu"] {{
+    background-color: {bg_card} !important;
+    color: {text_main} !important;
+}}
+[data-baseweb="popover"] li * {{
+    color: {text_main} !important;
+}}
+[data-baseweb="popover"] li:hover,
+[data-baseweb="popover"] li:hover * {{
+    background-color: {pri}22 !important;
+}}
+[data-baseweb="popover"] li[aria-selected="true"],
+[data-baseweb="popover"] li[aria-selected="true"] * {{
+    background-color: {pri}33 !important;
+    color: {text_main} !important;
+}}
+
 /* Sidebar override for white text */
 section[data-testid="stSidebar"] h1,
 section[data-testid="stSidebar"] h2,
@@ -1129,3 +1179,4 @@ elif page_key == "about":
         </p>
     </div>
     """, unsafe_allow_html=True)
+
